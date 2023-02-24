@@ -23,7 +23,7 @@ SchoolFactors := RECORD
     AllSchools.enrollment,  // Total Enrollment
     AllSchools.ft_teacher,  // Full Time Teachers
     // Care about when the data was sourced, the older the worse
-    Source_Date := STD.Date.FromStringToDate(AllSchools.sourcedate[..10], '%Y%m%d'), // Get the Year/Month/Day, ignore time
+    Source_Year := STD.Date.Year(STD.Date.FromStringToDate(AllSchools.sourcedate[..10], '%Y%m%d')), // Get the Year/Month/Day, ignore time
     STRatio     := ROUND(AllSchools.enrollment / AllSchools.ft_teacher),
 END;
 
@@ -33,6 +33,8 @@ AllSchoolFactors := TABLE(AllSchools, SchoolFactors); // Create a table using th
 // Filter down based on Enrollment Count and Student Teacher Ratio
 CleanAllSchoolFactors := AllSchoolFactors(enrollment > 100, STRatio >= 10); // Filter down using limits
 
+Max_Year := MAX(CleanAllSchoolFactors.Source_Year);
+
 // Create Table by State
 SchoolByState   := TABLE(CleanAllSchoolFactors,
                                                 {
@@ -40,6 +42,8 @@ SchoolByState   := TABLE(CleanAllSchoolFactors,
                                                 state_enrollment := COUNT(GROUP),
                                                 PublicCount      := COUNT(GROUP, Public = TRUE),
                                                 PrivateCount     := COUNT(GROUP, Public = FALSE),
+                                    DECIMAL5_2  PrivPubRatio     := 0, 
+                                    INTEGER     YearScore        := 0,
                                                 AVESTRatio       := AVE(COUNT(GROUP), 2)
                                                 }
                                                 ,state);
@@ -53,10 +57,29 @@ SchoolByCounty   := TABLE(CleanAllSchoolFactors,
                                                 state_enrollment := COUNT(GROUP),
                                                 PublicCount      := COUNT(GROUP, Public = TRUE),
                                                 PrivateCount     := COUNT(GROUP, Public = FALSE),
+                                    DECIMAL5_2  PrivPubRatio     := 0, 
+                                    INTEGER     YearScore        := 0,          
                                                 AVESTRatio       := AVE(COUNT(GROUP), 2)
                                                 }
                                                 ,county);
 
 
-OUTPUT(SAMPLE(SchoolByState, 5) , NAMED('StateSchoolSample'));
-OUTPUT(SAMPLE(SchoolByCounty, 5), NAMED('CountySchoolSample'));
+
+final_SchoolByState := PROJECT(SchoolByState, 
+                                TRANSFORM(RECORDOF(SchoolByState),
+                                         SELF.PrivPubRatio := ((LEFT.PrivateCount / LEFT.PublicCount) * 100),
+                                         
+                                         SELF := LEFT
+                                         ));
+
+
+// Want to change to have the school ratio by county in a specific state
+final_SchoolByCounty := PROJECT(SchoolByCounty, 
+                                TRANSFORM(RECORDOF(SchoolByCounty),
+                                         SELF.PrivPubRatio := ((LEFT.PrivateCount / LEFT.PublicCount) * 100),
+                                         SELF := LEFT
+                                         ));
+
+
+OUTPUT(SchoolByState , NAMED('StateSchoolSample'));
+OUTPUT(SchoolByCounty, NAMED('CountySchoolSample'));

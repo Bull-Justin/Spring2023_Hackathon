@@ -1,5 +1,3 @@
-#OPTION('obfuscateOutput', TRUE);
-
 IMPORT Spring2023_Hackathon.FindOurParadise.Datasets, STD, $;
 
 AllSchools := Datasets.File_AllSchools.File;

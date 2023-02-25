@@ -7,7 +7,6 @@ HealthDS   := $.File_Composite.HealthScoreDS;
 UnempDS    := $.File_Composite.UnempDS;
 
 
-
 // WEATHER
 state := TABLE(WeatherDS, {state, evtscore}, FEW);
 OUTPUT(state, NAMED('state_evt'));

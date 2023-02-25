@@ -1,5 +1,3 @@
-#OPTION('obfuscateOutput', TRUE);
-
 STSchoolScoresRec := RECORD
     STRING2     State,
     INTEGER8    StateCount,

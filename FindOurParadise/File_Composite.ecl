@@ -92,11 +92,6 @@ EXPORT Layout := RECORD
   DECIMAL5_4 propcomprat; //aggregate of the above
   UNSIGNED1 ViolentScore;
   UNSIGNED1 PropCrimeScore;
-  //Mortality (Health) Data
-  // DECIMAL5_2 sumcum;
-  // DECIMAL5_2 maxcum;
-  // DECIMAL5_2 mincum;
-  // UNSIGNED1 MortalityScore;
   // New Health Data
   INTEGER   AggAccidentRate;
   UNSIGNED1 AccidentScore;
@@ -114,8 +109,8 @@ EXPORT Layout := RECORD
   UNSIGNED1   UnemploymentScore;
  END;
  
- EXPORT File        := DATASET('~FYP::Main::Hacks::TeamFriendshipParadiseScores', Layout, THOR);
- EXPORT IDX         := INDEX(File, {ParadiseScore}, {File}, '~FYP::Main::Hacks::TeamFriendshipParadiseIndex');
- EXPORT TF_BLD_IDX  := BUILD(IDX,OVERWRITE);
+ EXPORT File        := DATASET('~FYP::Main::Hacks::TeamFriendshipParadiseScaled', Layout, THOR);
+ EXPORT TF_IDX      := INDEX(File, {ParadiseScore}, {File}, '~FYP::Main::Hacks::TeamFriendshipParadiseIndex');
+ EXPORT TF_BLD_IDX  := BUILD(TF_IDX,OVERWRITE);
 END;
 

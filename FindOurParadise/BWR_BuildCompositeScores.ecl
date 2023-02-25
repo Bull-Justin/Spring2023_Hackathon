@@ -2,8 +2,8 @@
 WeatherDS  := $.File_Composite.WeatherScoreDS;
 CrimeDS    := $.File_Composite.CrimeScoreDS;
 EdDS       := $.File_Composite.EduScoreDS;
-HealthDS   := $.File_Composite.HealthScoreDS;
 UnempDS    := $.File_Composite.UnempDS;
+HealthDS   := $.File_Composite.HealthScoreDS;
 
 CombLayout := $.File_Composite.Layout;
 
@@ -53,14 +53,11 @@ MergeUnemployment := JOIN(MergeEducation,UnempDS,
 
 OUTPUT(MergeUnemployment,NAMED('CrimeWeatherEducationUnemployment'));
 
-// sumcum;          OOD
-// maxcum;          OOD 
-// mincum;          OOD 
-// MortalityScore;  OOD
+
 // AggAccidentRate
 // AccidentScore
-MergeAll := JOIN(MergeEducation,HealthDS,
-                    LEFT.State = Right.State,
+MergeAll := JOIN(MergeUnemployment,HealthDS,
+                    LEFT.State = Right.State, // Where the states are the same
                     TRANSFORM(CombLayout,
                     SELF.AggAccidentRate    := RIGHT.AggAccidentRate,
                     SELF.AccidentScore      := RIGHT.AccidentScore,

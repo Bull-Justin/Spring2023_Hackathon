@@ -1,5 +1,5 @@
 ﻿IMPORT $;
-ParaIDX := $.File_Composite.IDX;
+ParaIDX := $.File_Composite.TF_IDX;
 
 EXPORT FindURParadiseSvc() := FUNCTION
 Parms := STORED($.iParadise);
@@ -16,15 +16,24 @@ RECORDOF(ParaIDX) CalcScore(ParaIDX Le) := TRANSFORM
  WF   := IF(Parms.Weather_Fatalities,   Le.FatScore,0);
  UR   := IF(Parms.Unemployment_Rate,    Le.UnemploymentScore,0); // Unemployment SF
  SELF.ParadiseScore := STR + PSC + PSC2 + VC + PC + AD + WE + WI + WF + UR;
- SELF := Le                       
+ SELF := Le
 END;
 
 ParaCustom := PROJECT(ParaIDX,CalcScore(LEFT));
 
-Res := IF(Parms.I_Want_It_All = TRUE,
+MAX_SCORE := MAX(ParaCustom, ParadiseScore);
+
+RECORDOF(ParaIDX) ScaleScore(ParaIDX Le) := TRANSFORM
+ SELF.ParadiseScore := ((Le.ParadiseScore / MAX_SCORE) * 100);
+ SELF := Le                       
+END;
+
+ParaScaled := PROJECT(ParaCustom, ScaleScore(LEFT));
+
+Res := IF(Parms._I_Want_It_All = TRUE,
           SORT(ParaIDX,   -ParadiseScore),
-          SORT(ParaCustom,-ParadiseScore));
+          SORT(ParaScaled,-ParadiseScore));
    
 RETURN Res;   
    
-END;   
+END;

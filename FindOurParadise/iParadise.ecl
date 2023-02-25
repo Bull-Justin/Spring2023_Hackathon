@@ -9,5 +9,5 @@
  EXPORT BOOLEAN Weather_Injuries      := FALSE;
  EXPORT BOOLEAN Weather_Fatalities    := FALSE;
  EXPORT BOOLEAN Unemployment_Rate     := FALSE;
- EXPORT BOOLEAN I_Want_It_All         := FALSE;
+ EXPORT BOOLEAN _I_Want_It_All         := FALSE;
 END;

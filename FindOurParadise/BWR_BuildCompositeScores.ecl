@@ -3,7 +3,6 @@ WeatherDS  := $.File_Composite.WeatherScoreDS;
 CrimeDS    := $.File_Composite.CrimeScoreDS;
 EdDS       := $.File_Composite.EduScoreDS;
 HealthDS   := $.File_Composite.HealthScoreDS;
-// Placeholder for Unemployment
 UnempDS    := $.File_Composite.UnempDS;
 
 CombLayout := $.File_Composite.Layout;
@@ -45,13 +44,12 @@ MergeEducation := JOIN(MergeCrime,EdDS,
 OUTPUT(MergeEducation,NAMED('CrimeWeatherEducation'));
 
 
-MergeUnemployment := JOIN(MergeEducation, UnempDS,
-                            LEFT.State = RIGHT.State,
-                            TRANSFORM(CombLayout,
-                                        SELF.Agg_rate_diff := RIGHT.Agg_rate_diff,
-                                        SELF.UnemploymentScore := RIGHT.UnemploymentScore,
-                                        SELF:= LEFT
-                                    ), LOOKUP);
+MergeUnemployment := JOIN(MergeEducation,UnempDS,
+                   LEFT.State = Right.State,
+                   TRANSFORM(CombLayout,
+                             SELF.Agg_rate_diff         := RIGHT.Agg_rate_diff,
+                             SELF.UnemploymentScore     := RIGHT.UnemploymentScore,
+                             SELF := LEFT),LOOKUP);
 
 OUTPUT(MergeUnemployment,NAMED('CrimeWeatherEducationUnemployment'));
 
@@ -61,13 +59,9 @@ OUTPUT(MergeUnemployment,NAMED('CrimeWeatherEducationUnemployment'));
 // MortalityScore;  OOD
 // AggAccidentRate
 // AccidentScore
-MergeAll := JOIN(MergeUnemployment,HealthDS,
+MergeAll := JOIN(MergeEducation,HealthDS,
                     LEFT.State = Right.State,
                     TRANSFORM(CombLayout,
-                    // SELF.sumcum := RIGHT.sumcum,
-                    // SELF.maxcum := RIGHT.maxcum,
-                    // SELF.mincum := RIGHT.mincum,
-                    // SELF.MortalityScore := RIGHT.MortalityScore,
                     SELF.AggAccidentRate    := RIGHT.AggAccidentRate,
                     SELF.AccidentScore      := RIGHT.AccidentScore,
                     SELF := LEFT),LOOKUP);
@@ -93,6 +87,5 @@ END;
 ScaledParadiseSummary := PROJECT(ParadiseSummary, ScaleScore(LEFT));
 
 OUTPUT(ScaledParadiseSummary, NAMED('ScaledScores'));
-
 OUTPUT(ParadiseSummary      ,,'~FYP::Main::Hacks::TeamFriendshipParadiseScores',NAMED('TF_Final_Output')       , OVERWRITE);
 OUTPUT(ScaledParadiseSummary,,'~FYP::Main::Hacks::TeamFriendshipParadiseScaled',NAMED('TF_Scaled_Final_Output'), OVERWRITE);

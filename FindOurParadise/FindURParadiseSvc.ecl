@@ -15,7 +15,7 @@ RECORDOF(ParaIDX) CalcScore(ParaIDX Le) := TRANSFORM
  WI   := IF(Parms.Weather_Injuries,     Le.InjScore,0);
  WF   := IF(Parms.Weather_Fatalities,   Le.FatScore,0);
  UR   := IF(Parms.Unemployment_Rate,    Le.UnemploymentScore,0);
- SELF.ParadiseScore := STR + PSC + PSC2 + VC + PC + AD + WE + WI + WF;
+ SELF.ParadiseScore := STR + PSC + PSC2 + VC + PC + AD + WE + WI + WF + UR;
  SELF := Le                       
 END;
 

@@ -1,0 +1,52 @@
+state_abrv,state_name,2020_rate,2021_rate,rate_diff
+AL,Alabama,6.5,3.4,-3.1
+AK,Alaska,8.2,6.4,-1.8
+AZ,Arizona,7.7,4.9,-2.8
+AR,Arkansas,6.1,4,-2.1
+CA,California,10.2,7.3,-2.9
+CO,Colorado,6.9,5.4,-1.5
+CT,Connecticut,7.8,6.3,-1.5
+DE,Delaware,7.6,5.3,-2.3
+DC,District of Columbia,8,6.6,-1.4
+FL,Florida,8.2,4.6,-3.6
+GA,Georgia,6.5,3.9,-2.6
+HI,Hawaii,12,5.7,-6.3
+ID,Idaho,5.5,3.6,-1.9
+IL,Illinois,9.2,6.1,-3.1
+IN,Indiana,7.2,3.6,-3.6
+IA,Iowa,5.1,4.2,-0.9
+KS,Kansas,5.7,3.2,-2.5
+KY,Kentucky,6.4,4.7,-1.7
+LA,Louisiana,8.7,5.5,-3.2
+ME,Maine,5,4.6,-0.4
+MD,Maryland,6.7,5.8,-0.9
+MA,Massachusetts,9.4,5.7,-3.7
+MI,Michigan,10,5.9,-4.1
+MN,Minnesota,6.3,3.4,-2.9
+MS,Mississippi,7.9,5.6,-2.3
+MO,Missouri,6.1,4.4,-1.7
+MT,Montana,5.8,3.4,-2.4
+NE,Nebraska,4.1,2.5,-1.6
+NV,Nevada,13.5,7.2,-6.3
+NH,New Hampshire,6.7,3.5,-3.2
+NJ,New Jersey,9.5,6.3,-3.2
+NM,New Mexico,8.1,6.8,-1.3
+NY,New York,9.9,6.9,-3
+NC,North Carolina,7.1,4.8,-2.3
+ND,North Dakota,5.1,3.7,-1.4
+OH,Ohio,8.2,5.1,-3.1
+OK,Oklahoma,6.2,3.8,-2.4
+OR,Oregon,7.6,5.2,-2.4
+PA,Pennsylvania,9.1,6.3,-2.8
+RI,Rhode Island,9.2,5.6,-3.6
+SC,South Carolina,6,4,-2
+SD,South Dakota,4.3,3.1,-1.2
+TN,Tennessee,7.4,4.3,-3.1
+TX,Texas,7.7,5.7,-2
+UT,Utah,4.7,2.7,-2
+VT,Vermont,5.6,3.4,-2.2
+VA,Virginia,6.2,3.9,-2.3
+WA,Washington,8.5,5.2,-3.3
+WV,West Virginia,8.2,5,-3.2
+WI,Wisconsin,6.3,3.8,-2.5
+WY,Wyoming,5.8,4.5,-1.3

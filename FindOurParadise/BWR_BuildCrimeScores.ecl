@@ -37,4 +37,5 @@ AddPropScore    := ITERATE(SORT(AddViolentScore,-propcomprat),
                                         SELF.PropCrimeScore := IF(LEFT.propcomprat=RIGHT.propcomprat,
                                                                 LEFT.PropCrimeScore,LEFT.PropCrimeScore+1),SELF := RIGHT));
 
+
 OUTPUT(AddPropScore,,'~FYP::Main::Hacks::TeamFriendshipCrimeScores',NAMED('TopCrime'),OVERWRITE);

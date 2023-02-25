@@ -62,7 +62,7 @@ RatioRec CalcRatios(AveCrimeTBL Le) := TRANSFORM
  SELF.BurglaryRat       := (Le.BurglaryAvg  /Le.PopAvg)    * 100;
  SELF.LarcenyRat        := (Le.LarcenyAvg   /Le.PopAvg)    * 100;
  SELF.Veh_TheftRat      := (Le.Veh_TheftAvg /Le.PopAvg)    * 100;
- SELF.PropCompRat       := (((Le.RobberyAvg + Le.Prop_CrimeAvg + Le.BurglaryAvg + Le.LarcenyAvg + Le.Veh_TheftAvg) / 5) / Le.PopAvg) * 100 * 0.6;
+ SELF.PropCompRat       := (((Le.RobberyAvg + Le.Prop_CrimeAvg + Le.BurglaryAvg + Le.LarcenyAvg + Le.Veh_TheftAvg) / 5) / Le.PopAvg) * 100;
 END;
 
 BuildRatios := PROJECT(AveCrimeTBL,CalcRatios(LEFT));

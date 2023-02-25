@@ -9,7 +9,7 @@ EXPORT File_Composite := MODULE
   UNSIGNED1  PropCrimeScore;
  END;
  
- EXPORT CrimeScoreDS := DATASET('~FYP::Main::Hacks::CrimeScores',CrimeScoreRec,FLAT);
+ EXPORT CrimeScoreDS := DATASET('~FYP::Main::Hacks::TeamFriendshipCrimeScores',CrimeScoreRec,FLAT);
 
 //Education
  EXPORT EduScoreRec := RECORD
@@ -25,16 +25,32 @@ EXPORT File_Composite := MODULE
  EXPORT EduScoreDS := DATASET('~FYP::Main::Hacks::educationscores',EduScoreRec,FLAT);
  
  //Health
- EXPORT MortScoreRec := RECORD
-  STRING2    State;
-  DECIMAL5_2 Sumcum;
-  DECIMAL5_2 Maxcum;
-  DECIMAL5_2 Mincum;
-  UNSIGNED1  Mortalityscore;
- END;
+//  EXPORT MortScoreRec := RECORD
+//   STRING2    State;
+//   DECIMAL5_2 Sumcum;
+//   DECIMAL5_2 Maxcum;
+//   DECIMAL5_2 Mincum;
+//   UNSIGNED1  Mortalityscore;
+//  END;
 
- EXPORT MortScoreDS := DATASET('~FYP::Main::Hacks::lifescore',MortScoreRec,FLAT);
+//  EXPORT MortScoreDS := DATASET('~FYP::Main::Hacks::lifescore',MortScoreRec,FLAT);
+
+// New Health
+ EXPORT NHealthScoreRec := RECORD
+  STRING2   State,
+  INTEGER   AggAccidentRate,
+  UNSIGNED1 AccidentScore
+ END;
  
+EXPORT HealthScoreDS := DATASET('~FYP::Main::Hacks::TeamFriendshipHealthScores', NHealthScoreRec, FLAT);
+
+EXPORT UnemploymentRec := RECORD
+  STRING2 State, 
+  DECIMAL2_1 Agg_rate_diff,
+  UNSIGNED1 UnemploymentScore
+END;
+EXPORT UnempDS := DATASET('~FYP::Main::Hacks::TeamFriendshipEmploymentScores', UnemploymentRec, FLAT);
+
 //Weather
  EXPORT WeatScoreRec := RECORD
   STRING2   state;
@@ -49,16 +65,16 @@ EXPORT File_Composite := MODULE
  EXPORT WeatherScoreDS := DATASET('~FYP::Main::Hacks::weatherscores',WeatScoreRec,FLAT);
  
 EXPORT Layout := RECORD
-  string2  state;
-  string20 StateName;
+  string2   state;
+  string20  StateName;
   //ParadiseAggregate
   UNSIGNED2 ParadiseScore;
   //Education Data
   // integer8 stcnt;
-  integer8 pubcnt;
-  integer8 prvcnt;
+  integer8  pubcnt;
+  integer8  prvcnt;
   // decimal5_2 prpubrat;
-  real8 avestratio;
+  real8     avestratio;
   UNSIGNED1 StudentTeacherScore;
   UNSIGNED1 PrvSchoolScore;
   UNSIGNED1 PublicSchoolScore;
@@ -77,10 +93,13 @@ EXPORT Layout := RECORD
   UNSIGNED1 ViolentScore;
   UNSIGNED1 PropCrimeScore;
   //Mortality (Health) Data
-  DECIMAL5_2 sumcum;
-  DECIMAL5_2 maxcum;
-  DECIMAL5_2 mincum;
-  UNSIGNED1 MortalityScore;
+  // DECIMAL5_2 sumcum;
+  // DECIMAL5_2 maxcum;
+  // DECIMAL5_2 mincum;
+  // UNSIGNED1 MortalityScore;
+  // New Health Data
+  INTEGER   AggAccidentRate;
+  UNSIGNED1 AccidentScore;
   //Weather Data
   // UNSIGNED1 sevcode;
   UNSIGNED2 evtsum;
@@ -89,9 +108,14 @@ EXPORT Layout := RECORD
   UNSIGNED1 EvtScore;
   UNSIGNED1 InjScore;
   UNSIGNED1 FatScore;
+  // Unemployment Data
+  // STRING2 State, 
+  DECIMAL2_1  Agg_rate_diff;
+  UNSIGNED1   UnemploymentScore;
  END;
- EXPORT File    := DATASET('~FYP::Main::Hacks::ParadiseScores',Layout,THOR);
- EXPORT IDX     := INDEX(File,{ParadiseScore},{File},'~FYP::Main::Hacks::ParadiseIndex');
- EXPORT BLD_IDX := BUILD(IDX,OVERWRITE);
+ 
+ EXPORT File        := DATASET('~FYP::Main::Hacks::TeamFriendshipParadiseScores', Layout, THOR);
+ EXPORT IDX         := INDEX(File, {ParadiseScore}, {File}, '~FYP::Main::Hacks::TeamFriendshipParadiseIndex');
+ EXPORT TF_BLD_IDX  := BUILD(IDX,OVERWRITE);
 END;
 
